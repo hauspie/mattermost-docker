@@ -7,15 +7,9 @@ app:
   build: app
   links:
     - db:pg
+  ports:
+    - "127.0.0.1:8080:80"
   volumes:
     - ./volumes/app/mattermost/config:/mattermost/config:rw
     - ./volumes/app/mattermost/data:/mattermost/data:rw
-    - /etc/localtime:/etc/localtime:ro
-web:
-  build: web
-  ports:
-    - "443:443"
-  links:
-    - app:platform
-  volumes:
     - /etc/localtime:/etc/localtime:ro
