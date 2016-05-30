@@ -1,23 +1,14 @@
 FROM ubuntu:14.04
 
-RUN apt-get update && apt-get -y upgrade && apt-get -y install wget netcat
+RUN apt-get update && apt-get -y install curl netcat
 RUN mkdir -p /mattermost/data
 
-RUN touch /etc/init/mattermost.conf
-RUN echo $'start on runlevel [2345]\n\
-stop on runlevel [016]\n\
-respawn\n\
-chdir /mattermost\n\
-exec bin/platform\n'\
->> /etc/init/mattermost.conf
-
-RUN wget https://github.com/mattermost/platform/releases/download/v1.3.0/mattermost.tar.gz \
-	&& tar -xvzf mattermost.tar.gz && rm mattermost.tar.gz
+RUN curl https://releases.mattermost.com/3.0.2/mattermost-team-3.0.2-linux-amd64.tar.gz | tar -xvz
 
 COPY config.template.json /
 COPY docker-entry.sh /
 
 RUN chmod +x /docker-entry.sh
-ENTRYPOINT /docker-entry.sh
+ENTRYPOINT ["/docker-entry.sh"]
 
 EXPOSE 80
