@@ -14,7 +14,7 @@ app:
   build: app
   restart: always
   links:
-    - db:pg
+    - db:db
   ports:
     - "127.0.0.1:8080:80"
   volumes:
