@@ -1,10 +1,12 @@
 db:
   build: db
+  restart: always
   volumes:
     - ./volumes/db/var/lib/postgresql/data:/var/lib/postgresql/data
     - /etc/localtime:/etc/localtime:ro
 app:
   build: app
+  restart: always
   links:
     - db:pg
   ports:
